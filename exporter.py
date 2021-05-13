@@ -235,7 +235,8 @@ class Exporter(object):
             ).set(device.lastStatusUpdate.timestamp())
 
     def __collect_switch_metrics(self, room, device):
-        self.metric_switch_on.labels(room=room,device_label=device.label).set(device.on)
+        if device.on is not None:
+            self.metric_switch_on.labels(room=room,device_label=device.label).set(device.on)
 
     def __collect_window_state(self, room, device):
         self.metric_window_state.labels(room=room,device_label=device.label).state(device.windowState)
